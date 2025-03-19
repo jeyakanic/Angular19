@@ -1,0 +1,220 @@
+div class="row">
+    <div class="col-12" *ngIf="currentView ==='List'">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-6 text-white">
+                        <strong>Project List</strong>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" (click)="CreateNew()"> Create New Project </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td>Project ID</td>
+                                <td>Project Name</td>
+                                <td>Active</td>
+                                <td>Start Date</td>
+                                <td>LeadBy Employee</td>
+                                <td>Actions</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let project of paginatedData; let sr=index">
+                                <td>
+                                    {{sr+1}}   "-"  {{project.id}}
+                                </td>
+                                <td>
+                                    {{project.projectName}}
+                                </td>
+                                <td>
+                                    {{project.isActive}}
+                                </td>
+                                <td>
+                                    {{project.startDate}}
+                                </td>
+
+                                <td>
+                                    {{project.leadByEmail}}
+                                </td>
+                                <td>
+                                    <button class="btn btn-success btn-sm mx-2" (click)="onEdit(project)">Edit</button>
+                                    <button class="btn btn-danger btn-sm mx-2"
+                                        (click)="onDelete(project.leadByEmail)">Delete</button>
+                                    <button class="btn btn-success btm-sm mx-2"
+                                        (click)="onAddEmployee(project.leadByEmail)">Employees</button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12" *ngIf="currentView !=='List'">
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-6 text-white">
+                                <strong>New Project </strong>
+                            </div>
+                            <div class="col-6 text-end">
+                                <button class="btn btn-primary" (click)="currentView='List'"> Close </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form class="mb-4" [formGroup]="projectForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="projectName" class="form-label">Project Name</label>
+                                    <input type="text" class="form-control" formControlName="projectName" id="projectName"
+                                        placeholder="Enter Project Name" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="clientName" class="form-label">Client Name</label>
+                                    <input type="text" class="form-control" formControlName="clientName" id="clientName"
+                                        placeholder="Enter Client Name" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="startDate" class="form-label">Start Date</label>
+                                    <input type="date" class="form-control" formControlName="startDate" id="startDate" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="leadBy" class="form-label">LeadBy Employee ID</label>
+                                    <select class="form-select" formControlName="role">
+                                        <option value="">Select Rple</option>
+                                        <option *ngFor="let roles of (role | async) || []" [value]="roles.id">
+                                            {{ roles.role1 }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="contactPerson" class="form-label">Contact Person</label>
+                                    <input type="text" class="form-control" formControlName="contactPerson" id="contactPerson"
+                                        placeholder="Enter Contact Person Name" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="contactNo" class="form-label">Contact Number</label>
+                                    <input type="text" class="form-control" formControlName="contactNo" id="contactNo"
+                                        placeholder="Enter Contact number Project Name" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="emailId" class="form-label">Email</label>
+                                    <input type="text" class="form-control" formControlName="emailID" id="emailID"
+                                        placeholder="Enter Email" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3" (click)="OnSaveProject()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="totalItems !== null">
+    <app-pagination
+    [totalItems]="totalItems"
+    [itemsPerPage]="itemsPerPage"
+    [currentPage]="currentPage"
+    (onClick)="changePage($event)">
+  </app-pagination></div>
+  
+  {{ totalItems }}
+    <!--
+    <div class="modal" #mymodal>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Project Employees</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeModal()"></button>
+                </div>
+                <div class="modal-body modal-lg">
+                    <div class="row pt-3">
+                        <div class="col-3">
+                           <div *ngIf="employee$ | async as employee">
+                    <p>{{ employee.firstName }}</p>
+                    <p>{{ employee.email }}</p>
+                    </div>
+                    <select name="ddlemployee" class="form-select" [(ngModel)]="employeeData$.">
+                        <option value="0">Select Employee</option>
+                        <option *ngFor="let emp of employeeData$ | async" [value]="emp.employeeId">
+                          {{ emp.employeeName }}
+                        </option>
+                      </select>
+
+
+
+                                                <select name="ddlemployee" id="" class="form-select" [(ngModel)]="(employee$ | async)?.">
+                                <option value="0">Select  Employee</option>
+                                <option *ngFor="let emp of employeeData$ |async" [value]="emp.employeeId">{{emp.employeeName}}</option>
+                            </select>
+                        </div>
+                      
+                        <div class="col-3" >
+                            <input type="date" class="form-control"  [(ngModel)]="projectEmployee.assignDate"/>
+                        </div>
+                        <div class="col-3">
+                            <input type="button" class="btn btn-primary btn-sm" value="Add" (click)="onAddEmpPrj()">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>                                        
+                                        <td>Project Name</td>
+                                        <td>Employee Name</td>
+                                        <td>Client Name</td>
+                                        <td>Start Date</td>
+                                        <td>LeadBy Employee</td>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="projectEmployeeList.length==0">
+                                        <tr>
+                                            <td colspan="5" class="text-center">
+                                                    <p>No Employees Added yet</p>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-container *ngIf="projectEmployeeList.length!=0">
+                                        <tr *ngFor="let prj of projectEmployeeList">
+                                            <td>{{prj.project?.projectName}}</td>
+                                            <td>{{prj.employee?.employeeName}}</td>
+                                            <td>{{prj.project?.clientName}}</td>
+                                            <td>{{prj.assignDate}}</td>
+                                            <td>{{prj.project?.leadBy}}</td>                                            
+                                            
+                                         </tr>
+                                    </ng-container>
+                                    
+        
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="closeModal()">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>-->

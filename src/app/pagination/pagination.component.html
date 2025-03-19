@@ -1,0 +1,22 @@
+<p>pagination works!</p>
+
+
+
+<nav>
+    <ul class="pagination">
+      <li  style="cursor:pointer" class="page-item disabled"  [ngClass]="{disabled:currentPage===1}" >
+        <a class="page-link" (click)="pageClick(currentPage-1)" >Previous</a>
+      </li>
+      <li 
+      *ngFor="let page of pages" 
+      (click)="pageClick(page)" 
+      class="page-item" [ngClass="{active:page==currentPage}"] 
+       >
+        <a class="page-link" href="javascript:void(0)">{{page}}</a>
+    </li>
+       
+      <li class="page-item" style="cursor:pointer" [ngClass]="{disabled:currentPage===totalpages}">
+        <a class="page-link"   (click)="pageClick(currentPage+1)" >Next</a>
+    </li>
+    </ul>
+</nav>

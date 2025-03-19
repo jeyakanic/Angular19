@@ -1,0 +1,189 @@
+<div class="row">
+  <div [class]="isAddnewopen() ? 'col-7' :'col-12'">
+  <div class="card-header bg-secondary" >
+      <div class="row">
+          <div class="col6 text-white" >
+              <strong>Employee Portal</strong>
+          </div>
+          <div class="col6 text-end">
+              <button class="btn btn-warning" (click)="addNew()">Add New</button>
+          </div>
+      </div>
+  </div>
+  <div class="card-body">
+      <table class="table table-bordered">
+          <thead>
+              <tr>
+                  <th [hidden]="!shouldShowId">
+                      Employee ID
+                  </th>
+      <th>
+          Employee Name
+      </th>
+      <th>
+          Last Name
+      </th>
+      <th>
+          Email 
+      </th>
+      <th>
+        phone Number
+      </th>
+      <th>
+          Gender
+      </th>
+       
+      <th>
+          Department
+      </th>
+      <th>
+          Role
+      </th>
+      </tr>
+          </thead>
+          <tbody  >
+      
+      @for (item of employees; track $index)
+      {
+          <tr>
+              <td [hidden]="!shouldShowId">
+                  {{item.id}}
+              </td>
+              <td>
+                  {{item.firstName}}
+              </td>
+              <td>
+                  {{item.lastName}}
+              </td>
+              <td>
+                  {{item.email}}
+              </td>
+              <td>
+                  {{item.phoneNumber}}
+              </td>
+              <td>
+                  {{item.gender}}
+              </td>        
+              <td>
+                  {{item.department?.department1}}
+              </td>
+              <td >
+                {{item.department?.id}}
+            </td>
+              <td>
+                {{item.role?.role1}}
+            </td>
+              <td>
+                  <button class="btn btn-success btn-sm mx-2" (click)="onEdit(item)"> Edit</button>
+                  <button class="btn btn-danger btn-sm mx-2" (click)="onDelete(item.id)">Delete</button>
+              </td>          
+          </tr>
+      
+      }
+      
+          </tbody>
+      </table>
+
+ <!-- Pagination Controls -->
+ <div class="pagination-controls">
+    <button
+      (click)="changePage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+      class="btn btn-secondary"
+    >
+      Previous
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages() }}</span>
+    <button
+      (click)="changePage(currentPage + 1)"
+      [disabled]="currentPage === totalPages()"
+      class="btn btn-secondary"
+    >
+      Next
+    </button>
+  </div>
+
+      </div>
+  </div>
+     
+     @if (isAddnewopen()) {
+       <div class="col-5">
+          <div class="card">
+              <div class="card-header bg-secondary" >
+                  <div class="row">
+                      <div class="col-6 text-white">
+                          <strong>New Employee</strong>
+                      </div>
+                      <div>
+                          <button class="btn btn-primary" (click)="Close()">  Close   </button>
+                      </div>            
+                  </div>
+              </div>
+              <div class="card-body">
+          
+                  <div class="col-md-6">
+                      <label>First Name</label>
+              
+                      <input type="text"  class="form-control" name="FirstName"  [value]="employeeObj.firstName" class="w-full p-2 border-2 rounded-sm mt-2 mx-2" />    
+                  </div>
+                  <div>
+                      <label>Last Name</label>
+                      <input type="text"  class="form-control"   name="LastName" [(ngModel)]="employeeObj.lastName" class="w-full p-2 border-2 rounded-sm mt-2 mx-2"/>    
+                  </div>
+                  <div class="col-md-6">
+                      <label>Email</label>
+                      <input type="text"  class="form-control"   name="Email"[(ngModel)]="employeeObj.email"  class="w-full p-2 border-2 rounded-sm mt-2 mx-2" />    
+                  </div>
+                  <div class="col-md-6">
+                      <label>Department </label>
+                     
+                      <select name="department" [(ngModel)]="employeeObj.department!.id" class="form-select w-full p-2 border-2 rounded-sm mt-2 mx-2">
+                        <option value="">--Select Department</option>
+                        <option value="1">Developer</option>
+                        <option value="2">HR</option>
+                        <option value="3">Account</option>
+                      </select>
+            
+                  </div> 
+                  <div  >
+                      <div>Select Gender</div> 
+                     <input type="radio"  value="Male" name="gender"  [(ngModel)]="employeeObj.gender"/>Male
+                     <input type="radio" value="Female" name="gender"  [(ngModel)]="employeeObj.gender"/>Female
+                      
+                  </div>
+                   
+                  
+                  <div class="col-md-6">
+                      <label>Password</label>
+                      <input type="text"  class="form-control" name="Password"   [(ngModel)]="employeeObj.password"  class="w-full p-2 border-2 rounded-sm mt-2 mx-2"/>    
+                  </div> 
+                  <div class="col-md-6">
+                    <label>role1</label>
+                  
+                 
+                    <select   class="form-control form-select"   name="role1"  [(ngModel)]="employeeObj.role!.role1">
+                <option value="">--Select Role--</option>
+                <option *ngFor="let roles of (role | async) || []" [value]="roles.id">
+                    {{ roles.role1 }}
+                </option>
+              </select>
+                </div> 
+                  
+                  <div class="mt-2">
+                      @if(employeeObj.id)
+                  {
+                      <button type="button" (click)="onUpdate()"  class="bg-slate-800 text-black px-4 py-2 rounded-sm w-full">Add</button>
+                  }
+                  @else
+                  {
+                      <button type="button" (click)="onFormSubmit()"  class="bg-slate-800 text-black px-4 py-2 rounded-sm w-full">Update</button>
+                  }
+                  
+                       
+                    </div>
+                  </div>
+          </div>
+       </div>
+     }
+   
+  </div>

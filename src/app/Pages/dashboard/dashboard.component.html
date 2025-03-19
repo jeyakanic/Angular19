@@ -1,0 +1,51 @@
+
+<p>dashboard works!</p>
+
+<div>
+    <table class="table table-bordered">
+        <thead>
+          
+                <tr>
+                    <td>
+                        EmployeeName
+                    </td>
+                    <td>
+                        ProjectName
+                    </td>
+                    <td>
+                        Role
+
+                    </td>
+                    <td>Assigned Date</td>
+                </tr>
+          
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of paginatedEmployees">
+                <td>{{item.employeeName}}</td>
+                <td>{{item.projectName}}</td>
+                <td>{{item.role}}</td>
+                <td>{{item.assignedDate}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+     <!-- Pagination Controls -->
+  <div class="pagination-controls">
+    <button
+      (click)="changePage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+      class="btn btn-secondary"
+    >
+      Previous
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button
+      (click)="changePage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+      class="btn btn-secondary"
+    >
+      Next
+    </button>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+<p>account-creation works!</p>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="panel-title">Create New Account</div>
+    </div>
+    <div class="panel-body">
+        <form [formGroup]="myForm" (ngSubmit)="CreateEmployee()">
+            
+            <!-- First Name -->
+            <div class="row fieldRow">
+                <div class="col-xs-2">
+                    <label for="firstName" class="fieldLabel">First Name:</label>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="firstName" formControlName="firstName" class="form-control" placeholder="First Name" />
+                </div>
+            </div>
+            <!-- Error Message -->
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <span *ngIf="getControl('firstName')?.invalid && (getControl('firstName')?.dirty || getControl('firstName')?.touched)" 
+                          class="error-message">
+                        First Name is required.
+                    </span>
+                </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="row fieldRow">
+                <div class="col-xs-2">
+                    <label for="lastName" class="fieldLabel">Last Name:</label>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="lastName" formControlName="lastName" class="form-control" placeholder="Last Name" />
+                </div>
+            </div>
+            <!-- Error Message -->
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <span *ngIf="getControl('lastName')?.invalid && (getControl('lastName')?.dirty || getControl('lastName')?.touched)" 
+                          class="error-message">
+                        Last Name is required.
+                    </span>
+                </div>
+            </div>
+
+            <!-- Email -->
+         
+            <div class="row fieldRow">
+                <div class="col-xs-2">
+                    <label for="email" class="fieldLabel">Email:</label>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="email" formControlName="email" class="form-control" placeholder="Email" />
+                </div>
+            </div>
+            <!-- Phone Number -->
+            <div class="row fieldRow">
+                <div class="col-xs-2">
+                    <label for="PhoneNumber" class="fieldLabel">Phone:</label>
+                </div>
+                <div class="col-xs-10">
+                    <input type="text" id="PhoneNumber" formControlName="PhoneNumber" class="form-control" placeholder="Phone Number" />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="row fieldRow">
+                <div class="col-xs-2">
+                    <label for="Password" class="fieldLabel">Password:</label>
+                </div>
+                <div class="col-xs-10">
+                    <input type="password" id="Password" formControlName="password" class="form-control" placeholder="Password" />
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="row fieldRow">
+                <div class="col-xs-2">
+                    <label for="confirmPassword" class="fieldLabel">Confirm Password:</label>
+                </div>
+                <div class="col-xs-6">
+                    <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control" placeholder="Confirm Password" />
+                </div>
+                <div class="col-xs-4"></div>
+            </div>
+
+            <!-- Gender -->
+            <div class="row fieldRow">
+                <div class="col-xs-2">
+                    <label for="gender" class="fieldLabel">Gender:</label>
+                </div>
+                <div class="col-xs-6">
+                    <select id="gender" formControlName="gender" class="form-control">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="col-xs-4"></div>
+            </div>
+
+            <!-- Submit & Reset Buttons -->
+            <div class="row fieldRow">
+                <div class="col-xs-10 col-xs-offset-2 text-center">
+                    <button type="submit" class="btn btn-primary">Add Account</button>
+                    <button type="button" (click)="myForm.reset()" class="btn btn-danger">Reset</button>
+                    <div class="text-danger font-weight-bold">{{ Message }}</div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<router-outlet></router-outlet>
