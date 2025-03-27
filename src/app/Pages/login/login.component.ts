@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { appConfig } from '../../app.config';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../Service/api.service';
 import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 

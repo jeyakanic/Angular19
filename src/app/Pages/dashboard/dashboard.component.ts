@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../Service/api.service';
 import { Employee } from '../../Model/Employee';
 import { pipe } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';

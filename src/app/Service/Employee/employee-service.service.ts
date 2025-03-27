@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ProjectEmployee } from './Model/ProjectEmployee';
+import { ProjectEmployee } from '../../Model/ProjectEmployee';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Employee } from './Model/Employee';
+import { Employee } from '../../Model/Employee';
 
 @Injectable({
   providedIn: 'root'

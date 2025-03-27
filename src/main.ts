@@ -4,6 +4,7 @@ import { AppComponent } from './app/app.component';
 import 'bootstrap';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
+
 bootstrapApplication(AppComponent, appConfig)
 //bootstrapApplication(AppComponent, {
   //providers: [provideRouter(routes)],})

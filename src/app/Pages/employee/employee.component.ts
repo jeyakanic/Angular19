@@ -1,16 +1,17 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Employee  } from '../../Model/Employee';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../Service/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, startWith, take } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Role } from '../../Model/role';
 import { PagedResult } from '../../Model/IPagedResult';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
-  imports: [CommonModule,FormsModule,ReactiveFormsModule],
+  imports: [CommonModule,RouterModule,ReactiveFormsModule,FormsModule],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css'
 })

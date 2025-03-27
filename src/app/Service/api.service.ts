@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Employee } from './Model/Employee';
-import { Project } from './Model/Project';
-import { ProjectEmployee } from './Model/ProjectEmployee';
-import { Role } from './Model/role';
-import { PagedResult } from './Model/IPagedResult';
+import { Employee } from '../Model/Employee';
+import { Project } from '../Model/Project';
+import { ProjectEmployee } from '../Model/ProjectEmployee';
+import { Role } from '../Model/role';
+import { PagedResult } from '../Model/IPagedResult';
 //import { Employee, IEmployee } from './employee';
 
 @Injectable({
