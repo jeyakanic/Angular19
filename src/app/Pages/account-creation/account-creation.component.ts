@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule ,NgForm,ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../Service/api.service';
 
 @Component({
   selector: 'app-account-creation',

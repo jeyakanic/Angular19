@@ -8,6 +8,7 @@ import { AccountCreationComponent } from './Pages/account-creation/account-creat
 import { TestDropdownComponent } from './test-dropdown/test-dropdown.component';
 import { ProjectEmployee } from './Model/ProjectEmployee';
 import { ProjectsComponent } from './Pages/projects/projects.component';
+import { ImageSiderComponent } from './image-sider/image-sider.component';
 
 export const routes: Routes = [
 
@@ -47,6 +48,10 @@ export const routes: Routes = [
             }, {
                 path: 'accountCreations',
                 component: AccountCreationComponent
+              },
+              {
+                path:"ImageSider",
+                component:ImageSiderComponent
               }
          
         ]

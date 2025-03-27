@@ -1,3 +1,16 @@
+
+.fullscreen-modal .modal-dialog {
+  max-width: 95%;
+  width: 95%;
+  height: 90vh;
+}
+
+.fullscreen-modal .modal-content {
+  height: 100%;
+  overflow-y: auto;
+}
+
+
 body {
     background-image: url("https://static.pexels.com/photos/173434/pexels-photo-173434.jpeg");
     -webkit-background-size: cover;

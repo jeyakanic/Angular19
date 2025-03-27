@@ -1,13 +1,13 @@
 import { ChangeDetectorRef, Component, ElementRef, Inject, inject, NgZone, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ProjectEmployee } from '../../Model/ProjectEmployee';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../../Service/api.service';
 import { Observable, startWith } from 'rxjs';
 import { Employee } from '../../Model/Employee';
 import { HttpClient } from '@angular/common/http';
 import { Project } from '../../Model/Project';
-import { ProjectEmployeeServiceService } from '../../project-employee-service.service';
-import { EmployeeServiceService } from '../../employee-service.service';
+import { ProjectEmployeeServiceService } from '../../Service/Project/project-employee-service.service';
+import { EmployeeServiceService } from '../../Service/Employee/employee-service.service';
 import { __values } from 'tslib';
 import { CommonModule } from '@angular/common';
 import { Role } from '../../Model/role';

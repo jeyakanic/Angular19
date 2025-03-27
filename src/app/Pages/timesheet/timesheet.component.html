@@ -30,14 +30,14 @@
   <input type="date" id="theDate">
   
   <div class="today-timesheet">
-    <button type="button" class="newmsgb">Today</button>
-    <button type="button" class="add-task-timesheet" data-toggle="modal" data-target="#addtask">Add New Task</button>
+    <button type="button" class="newmsgb" (click)="openModal()">Today</button>
+    <button type="button" class="add-task-timesheet" data-toggle="modal" data-target="#addTimesheet" >Add New Task</button>
   </div>
 </section>
 
 <section style="margin-top: -40px">
   
-  <p class="picked-day">2016-12-30</p>
+  <p class="picked-day">{{date}}</p>
 
 
   
@@ -52,8 +52,11 @@
           <div class="col-md-2 col-sm-2 col-xs-1">
             <div class="statustitle">Project</div>
            </div>
+           <div class="col-md-2 col-sm-2 col-xs-1">
+            <div class="statustitle">Project</div>
+           </div>
            <div class="col-md-2 col-sm-2 col-xs-2">
-             <div class="projectnametitle">Task</div>
+             <div class="projectnametitle">Employee </div>
            </div>
             <div class="col-md-2 col-sm-2 col-xs-2">
               <div class="completiontitle">Date</div>
@@ -74,6 +77,10 @@
         </div>
       </div>
     </div>  
+    @if (timesheets.length > 0)
+    {
+    <h3>Total Time: {{ getTotalTime(timesheets) }}</h3>
+    }
 </section>
 
 
@@ -82,27 +89,36 @@
    <div class="row">
      <div class="col-md-12 col-sm-12 col-xs-12">
        <div class="row timesheet-task-row">
+        @for (datas of timesheets; track datas.id )
+              {
           <div class="col-md-2 col-sm-2 col-xs-1">
-            <div class="statustitle">Project 1</div>
+            <div class="statustitle">{{ datas.projectName}}</div>
            </div>
            <div class="col-md-2 col-sm-2 col-xs-2">
-             <div class="projectnametitle">Task 1</div>
+            <a href="#" (click)="openTimesheetModal(datas.id,datas.employeeFirstName); $event.preventDefault();">
+              {{ datas?.employeeFirstName || 'N/A' }}   {{datas.id}}
+            </a> 
+           </div>
+           <div class="col-md-2 col-sm-2 col-xs-1" [hidden]="true">
+            <div class="statustitle">{{ datas.employeeid}}</div>
            </div>
             <div class="col-md-2 col-sm-2 col-xs-2">
-              <div class="completiontitle">2016-12-12</div>
+              <div class="completiontitle">{{datas.date}}</div>
            </div>
             <div class="col-md-2 col-sm-2 col-xs-2">
-              <div class="detailstitle">12:00/13:00</div>
+              <div class="detailstitle">{{datas.startTime}} / {{datas.endTime}}</div>
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-              <div class="detailstitle">1 Hr.</div>
+              <div class="detailstitle">{{datas.description}}</div>
             </div>
              <div class="col-md-2 col-sm-2 col-xs-2">
-              <div class="detailstitle">Really hard work.</div>
+              <div class="detailstitle">{{datas.email}}</div>
             </div>
              <div class="col-md-1 col-sm-1 col-xs-1">
-              <div class="tsdelete-row">x</div>
+
+              <div class="tsdelete-row">{{ datas.startTime?.toString()  | calculateHours: datas.endTime }} hours</div>
             </div>
+          }
           </div>
         </div>
       </div>
@@ -111,13 +127,13 @@
 
 
 <!-- Modal -->
-<div id="addtask" class="modal fade" role="dialog">
+<div #addTimesheet id="addTimesheet" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content timesheet">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close"  (click)="closeModal()" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Add Task</h4>
       </div>
       <div class="modal-body">
@@ -164,7 +180,9 @@
                 <div class="col-md-9">
                   <input type="date">
                 </div>
-              </div>
+              </div>   <div class="row">
+               
+
               <div class="row">
                 <div class="col-md-3">
                   <p>Start Time</p>
@@ -195,8 +213,8 @@
                 <div class="col-md-9">
                   
                    <div clas="actionbutton">
-     <p class="button-container"><button class="user-aciton">Add Task</button></p>
-   </div>  
+                  <p class="button-container"><button class="user-aciton"  (click)="addTimeSheet()"  >Add Timesheet</button></p>
+                </div>  
                 </div>
         
                 </div>
@@ -204,10 +222,113 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
         
         
+    <!-- Modal -->
+
+  <div  #showTimesheet id="showTimesheet" class="modal fade fullscreen-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content timesheet">
+      <div class="modal-header">
+        <button type="button" class="close"  (click)="closeShowModal()" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{selectedEmployeeName }} Timesheet</h4>
+      </div>
+      <div class="modal-body">
         
+        <div class="container-fluid">
         
+
+ 
+
+
+ <section>
+  <div class="container-fluid">
+
+      <div class="col-md-12 col-sm-12 col-xs-12 tab-title">
+        <div class="row">
+           <div class="col-md-2 col-sm-2 col-xs-1">
+             <div class="statustitle">Project</div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-1">
+             <div class="statustitle">Project</div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2">
+              <div class="projectnametitle">Employee </div>
+            </div>
+             <div class="col-md-2 col-sm-2 col-xs-2">
+               <div class="completiontitle">Date</div>
+            </div>
+             <div class="col-md-2 col-sm-2 col-xs-2">
+               <div class="detailstitle">Start Date/End Date</div>
+             </div>
+             <div class="col-md-1 col-sm-1 col-xs-1">
+               <div class="detailstitle">Duration</div>
+             </div>
+              <div class="col-md-2 col-sm-2 col-xs-2">
+               <div class="detailstitle">Description</div>
+             </div>
+              <div class="col-md-1 col-sm-1 col-xs-1">
+               <div class="tsdelete-row"></div>
+             </div>
+           </div>
+      
+       </div>
+     </div>  
+     @if (timesheetsEmpId.length > 0)
+     {
+     <h3>Total Time: {{ getTotalTime(timesheetsEmpId) }}</h3>
+     }
+ </section>
+ 
+ 
+ <section>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row timesheet-task-row">
+         @for (datas of timesheetsEmpId; track datas.id )
+               {
+           <div class="col-md-2 col-sm-2 col-xs-1">
+             <div class="statustitle">    {{ datas.projectName ? datas.projectName : datas.id }}</div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2">
+              <div class="completiontitle">    {{ datas.employeeFirstName ? datas.employeeFirstName : datas.employeeid }}</div>
+           </div>
+             <div class="col-md-2 col-sm-2 col-xs-2">
+               <div class="completiontitle">{{datas.date}}</div>
+            </div>
+             <div class="col-md-2 col-sm-2 col-xs-2">
+               <div class="detailstitle">{{datas.startTime}} / {{datas.endTime}}</div>
+             </div>
+             <div class="col-md-1 col-sm-1 col-xs-1">
+               <div class="detailstitle">{{datas.description}}</div>
+             </div>
+              <div class="col-md-2 col-sm-2 col-xs-2">
+               <div class="detailstitle">{{datas.email}}</div>
+             </div>
+              <div class="col-md-1 col-sm-1 col-xs-1">
+ 
+               <div class="tsdelete-row">{{ datas.startTime?.toString()  | calculateHours: datas.endTime }} hours</div>
+             </div>
+           }
+           </div>
+         </div>
+       </div>
+     </div>  
+ </section>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            
         
         
         
